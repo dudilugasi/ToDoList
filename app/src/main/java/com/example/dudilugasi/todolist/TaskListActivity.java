@@ -21,6 +21,7 @@ public class TaskListActivity extends AppCompatActivity {
         if (lv != null) {
             TaskListBaseAdapter adapter = new TaskListBaseAdapter(this,controller.getTasks());
             lv.setAdapter(adapter);
+
         }
 
     }

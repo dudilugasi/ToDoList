@@ -16,5 +16,6 @@ public class CreateTaskActivity extends AppCompatActivity {
     public void taskList(View view) {
         Intent intent = new Intent(this,TaskListActivity.class);
         startActivity(intent);
+        finish();
     }
 }

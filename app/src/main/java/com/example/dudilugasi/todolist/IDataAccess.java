@@ -9,6 +9,8 @@ public interface IDataAccess {
 
     List<TaskItem> GetTasks();
 
+    void addTask(String description);
+
 }
 
 

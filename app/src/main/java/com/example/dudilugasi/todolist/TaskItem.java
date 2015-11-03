@@ -1,7 +1,7 @@
 package com.example.dudilugasi.todolist;
 
 /**
- * Created by dudilugasi on 10/29/15.
+ * Class that represents a Task
  */
 public class TaskItem {
 

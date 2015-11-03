@@ -3,7 +3,7 @@ package com.example.dudilugasi.todolist;
 import java.util.List;
 
 /**
- * Created by dudilugasi on 10/29/15.
+ * Class that responsible for the tasks using the MockDao
  */
 public class TaskController implements ITaskController {
 
@@ -11,12 +11,17 @@ public class TaskController implements ITaskController {
     private IDataAccess dao;
 
     public TaskController() {
-        this.dao = new MockDAO();
+        this.dao = MockDAO.getInstance();
     }
 
     @Override
     public List<TaskItem> getTasks() {
         return dao.GetTasks();
+    }
+
+    @Override
+    public void addTask(String description) {
+        dao.addTask(description);
     }
 
 

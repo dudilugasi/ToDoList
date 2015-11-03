@@ -3,10 +3,11 @@ package com.example.dudilugasi.todolist;
 import java.util.List;
 
 /**
- * Created by dudilugasi on 10/29/15.
+ * ITaskController interface
  */
 public interface ITaskController {
 
         List<TaskItem> getTasks();
 
+        void addTask(String description);
 }

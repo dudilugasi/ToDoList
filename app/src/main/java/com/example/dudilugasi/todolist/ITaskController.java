@@ -9,5 +9,5 @@ public interface ITaskController {
 
         List<TaskItem> getTasks();
 
-        void addTask(String description);
+        void addTask(TaskItem item);
 }

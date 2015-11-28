@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import java.util.List;
 
 /**
  *  Activity which shows all the current tasks and the button to add new task
@@ -18,7 +21,7 @@ public class TaskListActivity extends AppCompatActivity {
     private static final String TAG = TaskListActivity.class.getName();
     private ITaskController controller;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private TaskListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
 
@@ -26,7 +29,7 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
-        controller = new TaskController();
+        controller = new TaskController(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.task_list_view);
         mRecyclerView.setHasFixedSize(true);
 
@@ -34,10 +37,9 @@ public class TaskListActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
-        mAdapter = new TaskListAdapter(controller.getTasks());
+        // specify an adapter
+        mAdapter = new TaskListAdapter(this,controller.getTasks());
         mRecyclerView.setAdapter(mAdapter);
-
     }
 
     /**
@@ -52,7 +54,13 @@ public class TaskListActivity extends AppCompatActivity {
         if (requestCode == Constants.REQUEST_CODE_ADD_TASK && resultCode == Activity.RESULT_OK) {
             String description = data.getStringExtra(Constants.ADD_NEW_TASK);
             if (description != null) {
-                controller.addTask(description);
+                controller.addTask(new TaskItem(description));
+                try {
+                    mAdapter.updateDataSource(controller.getTasks());
+                }
+                catch (Exception e) {
+                    Toast.makeText(this, e.getMessage() , Toast.LENGTH_SHORT).show();
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

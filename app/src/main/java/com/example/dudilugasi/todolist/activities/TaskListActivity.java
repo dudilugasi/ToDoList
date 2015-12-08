@@ -1,4 +1,4 @@
-package com.example.dudilugasi.todolist;
+package com.example.dudilugasi.todolist.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
+import com.example.dudilugasi.todolist.common.Constants;
+import com.example.dudilugasi.todolist.bl.ITaskController;
+import com.example.dudilugasi.todolist.R;
+import com.example.dudilugasi.todolist.bl.TaskController;
+import com.example.dudilugasi.todolist.common.TaskItem;
+import com.example.dudilugasi.todolist.bl.TaskListAdapter;
 
 /**
  *  Activity which shows all the current tasks and the button to add new task
@@ -38,7 +43,7 @@ public class TaskListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        mAdapter = new TaskListAdapter(this,controller.getTasks());
+        mAdapter = new TaskListAdapter(this,controller.getUncompletedTasks(),controller);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -54,9 +59,10 @@ public class TaskListActivity extends AppCompatActivity {
         if (requestCode == Constants.REQUEST_CODE_ADD_TASK && resultCode == Activity.RESULT_OK) {
             String description = data.getStringExtra(Constants.ADD_NEW_TASK);
             if (description != null) {
-                controller.addTask(new TaskItem(description));
+                TaskItem task = new TaskItem(description);
+                controller.addTask(task);
                 try {
-                    mAdapter.updateDataSource(controller.getTasks());
+                    mAdapter.add(task);
                 }
                 catch (Exception e) {
                     Toast.makeText(this, e.getMessage() , Toast.LENGTH_SHORT).show();

@@ -1,4 +1,4 @@
-package com.example.dudilugasi.todolist;
+package com.example.dudilugasi.todolist.bl;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,18 +8,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dudilugasi.todolist.R;
+import com.example.dudilugasi.todolist.common.TaskItem;
+import com.example.dudilugasi.todolist.common.ToDoListException;
+
 import java.util.List;
 
 /**
  * TaskListAdapter
  */
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
+    private final ITaskController controller;
     private List<TaskItem> taskItems;
     private Context context;
 
-    public TaskListAdapter(Context context ,List<TaskItem> tasks) {
+    public TaskListAdapter(Context context ,List<TaskItem> tasks, ITaskController controller) {
         this.taskItems = tasks;
         this.context = context;
+        this.controller = controller;
     }
 
     @Override
@@ -35,7 +41,21 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     public void onBindViewHolder(TaskListAdapter.ViewHolder holder, int position) {
         TaskItem item = taskItems.get(position);
         holder.mTvDescription.setText(item.getDescription());
+        holder.mTvDoneButton.setOnClickListener(doneButtonOnClickListener);
+        holder.mTvDoneButton.setTag(position);
     }
+
+    private final View.OnClickListener doneButtonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = (Integer) v.getTag();
+            TaskItem task = taskItems.get(position);
+            task.setDone(true);
+            controller.updateTask(task);
+            taskItems.remove(position);
+            notifyItemRemoved(position);
+        }
+    };
 
     @Override
     public int getItemCount() {
@@ -53,12 +73,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
     }
 
-    public void updateDataSource(List<TaskItem> tasks) throws ToDoListException {
-        if (tasks == null) {
+    public void add(TaskItem task) throws ToDoListException{
+        if (task == null) {
             throw new ToDoListException("error");
         }
         else {
-            this.taskItems = tasks;
+            this.taskItems.add(task);
         }
     }
 

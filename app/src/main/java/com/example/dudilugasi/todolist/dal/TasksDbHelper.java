@@ -1,7 +1,6 @@
-package com.example.dudilugasi.todolist;
+package com.example.dudilugasi.todolist.dal;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -19,7 +18,7 @@ public class TasksDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE "
                 + TasksDbContract.TaskEntry.TABLE_NAME + " (" + TasksDbContract.TaskEntry._ID
                 + " INTEGER PRIMARY KEY," + TasksDbContract.TaskEntry.COLUMN_TASK_DESCRIPTION
-                + " TEXT NOT NULL)";
+                + " TEXT NOT NULL, " + TasksDbContract.TaskEntry.COLUMN_TASK_DONE + " INT DEFAULT 0 NOT NULL)";
         db.execSQL(SQL_CREATE_LOCATION_TABLE);
     }
 

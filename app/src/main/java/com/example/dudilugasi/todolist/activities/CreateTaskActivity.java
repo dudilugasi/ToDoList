@@ -1,12 +1,14 @@
-package com.example.dudilugasi.todolist;
+package com.example.dudilugasi.todolist.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.dudilugasi.todolist.common.Constants;
+import com.example.dudilugasi.todolist.R;
 
 /**
  *  Activity that responsible for adding new task

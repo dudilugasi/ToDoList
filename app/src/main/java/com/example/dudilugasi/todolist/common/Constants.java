@@ -1,4 +1,4 @@
-package com.example.dudilugasi.todolist;
+package com.example.dudilugasi.todolist.common;
 
 /**
  * Class to hold constants for the application

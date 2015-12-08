@@ -1,6 +1,10 @@
-package com.example.dudilugasi.todolist;
+package com.example.dudilugasi.todolist.bl;
 
 import android.content.Context;
+
+import com.example.dudilugasi.todolist.dal.DAO;
+import com.example.dudilugasi.todolist.dal.IDataAccess;
+import com.example.dudilugasi.todolist.common.TaskItem;
 
 import java.util.List;
 
@@ -22,9 +26,22 @@ public class TaskController implements ITaskController {
     }
 
     @Override
+    public List<TaskItem> getUncompletedTasks() {
+        return dao.GetUncompletedTasks();
+    }
+
+    @Override
     public void addTask(TaskItem item) {
         dao.addTask(item);
     }
 
+    @Override
+    public void removeTask(TaskItem item) {
+        dao.removeTask(item);
+    }
 
+    @Override
+    public void updateTask(TaskItem item) {
+        dao.updateTask(item);
+    }
 }
